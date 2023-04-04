@@ -7,7 +7,7 @@ function App() {
       <div className='overlay'>
         <div className='drawer'>
           <h2 className='m-20'>Корзина
-            <img src='/images/button_remove.svg' alt='remove button' className='cartItem-button_remove mr-10'></img>
+            <img src='/images/button_remove.svg' alt='remove button' className='cartItem-button_remove'></img>
           </h2>        
 
           <div className='items d-flex flex-column flex pr-10'>
