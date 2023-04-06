@@ -1,7 +1,7 @@
 import styles from './Drawer.module.scss'
 import cn from 'classnames';
 
-function Drawer({setShowDrawer}) {
+function Drawer({setShowDrawer, chosedItems}) {
     
     return (
         <div className={styles.overlay}>
@@ -13,18 +13,20 @@ function Drawer({setShowDrawer}) {
                             onClick={()=>{setShowDrawer(false)}}
                     />
                 </h2>
+
                 <div className={cn(styles.items, 'd-flex', 'flex-column', 'flex', 'pr-10')}>
+                    {chosedItems.map(item=>(
+                        <div className={cn(styles.cartItem, 'd-flex', 'align-center', 'mb-15')}>
+                        <div className={styles.cartItemImage} style={{backgroundImage: `url(${item.imageUrl})`}}></div>
+                        <div className='mr-20 d-flex flex-wrap'>
+                            <p className='mb-5'>{item.title}</p>
+                            <b>{item.price} руб.</b>
+                        </div>
+                            <img src='/images/button_remove.svg' alt='remove button' className={cn(styles.removeButton, 'mr-10')}></img>
+                        </div>
+                    ))}
+                </div>    
 
-                    <div className={cn(styles.cartItem, 'd-flex', 'align-center', 'mb-15')}>
-                    <div className={styles.cartItemImage} style={{backgroundImage: 'url(/images/sneakers/1.svg)'}}></div>
-                    <div className='mr-20 d-flex flex-wrap'>
-                        <p className='mb-5'>Мужские Кроссовки Nike Blazer Mid Suede</p>
-                        <b>12 999 руб.</b>
-                    </div>
-                    <img src='/images/button_remove.svg' alt='remove button' className={cn(styles.removeButton, 'mr-10')}></img>
-                    </div>
-
-                </div>      
                 <div className={styles.cartTotalBlock}>
                     <ul>
                         <li>

@@ -1,17 +1,28 @@
 // import 'macro-css';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "./components/Card";
 import Drawer from "./components/Drawer";
 import Header from "./components/Header";
-import { cardList } from "./utils/constants";
 
 function App() {
   const [showDrawer, setShowDrawer] = useState(false)
+  const [items, setItems] = useState([])
+  const [chosedItems, setChosedItems] = useState([])
+
+  useEffect(()=>{
+    fetch('https://642e5d0b8ca0fe3352cde4c6.mockapi.io/items', 
+  {
+    method: 'GET',
+    headers: {'content-type':'application/json'},
+  })
+  .then(res => {if (res.ok) {return res.json()}})
+  .then(data => setItems(data))
+  .catch(error => {console.log(error)})
+},[])
   
   return (
     <main className="wrapper clear">
-      {showDrawer && <Drawer setShowDrawer={setShowDrawer}/>}
-      {/* <Drawer />      */}
+      {showDrawer && <Drawer setShowDrawer={setShowDrawer} chosedItems={chosedItems}/>}
       <Header setShowDrawer={setShowDrawer}/>
  
       <section className="content p-40">
@@ -24,13 +35,14 @@ function App() {
         </div>        
 
         <div className="d-flex flex-wrap">
-          {cardList.map((item, index) => (
+          {items.map((item, index) => (
             <Card 
               title={item.title} 
               price={item.price} 
               imageUrl={item.imageUrl} 
               id={index} 
               key={index}
+              setChosedItems={setChosedItems}
             />
             ))
           }
@@ -42,3 +54,4 @@ function App() {
 }
 
 export default App;
+

@@ -2,26 +2,29 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from './Card.module.scss'
 
-function Card({title, price, imageUrl, id}) {
+function Card({title, price, imageUrl, id, setChosedItems}) {
 
   const [checked, setChecked] = useState(false)
   const [liked, setLiked] = useState(false)
 
-  useEffect(()=>{console.log(id, checked, liked)}, [checked, liked])
+  // useEffect(()=>{console.log(id, checked, liked)}, [checked, liked])
 
   const handleClickLike = (e) => {
     try {
       setLiked(!liked)
+      console.log('like >>>', id)
     } catch (error) {
-      console.error();
+      console.log(error);
     }
   }
 
   const handleClickAdd = (e) => {
     try {
       setChecked(!checked)
+      setChosedItems(prev=> [...prev, {imageUrl, title, price}])
+      console.log({imageUrl, title, price})
     } catch (error) {
-      console.error();
+      console.log(error);
     }
   }
 
@@ -44,7 +47,7 @@ function Card({title, price, imageUrl, id}) {
                 <b>{price} руб.</b>
               </div>            
               <img className={styles.add_button} 
-                    onClick={handleClickAdd} 
+                    onClick={handleClickAdd}
                     src={checked ? "/images/button_checked.svg" : "/images/button_plus.svg"} 
                     alt="addButton picture"
               />              
