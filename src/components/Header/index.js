@@ -1,4 +1,4 @@
-function Header() {
+function Header({setShowDrawer}) {  
     return (
         <header className='d-flex justify-between align-center p-40 flex-wrap'>
         <div className="d-flex align-center">
@@ -8,7 +8,7 @@ function Header() {
             <p className="opacity-5"> Магазин лучших кроссовок</p>
           </div>
         </div>        
-        <ul className="d-flex">
+        <ul className="d-flex cu-p" onClick={()=>{setShowDrawer(true)}}>
           <li className="mr-30">
             <img src='/images/basket.svg' alt='basket picture' width={18} height={18} />
             <span>1205 руб.</span>

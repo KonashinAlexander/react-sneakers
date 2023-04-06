@@ -1,11 +1,17 @@
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from './Card.module.scss'
 
 function Card({title, price, imageUrl, id}) {
 
+  const [checked, setChecked] = useState(false)
+  const [liked, setLiked] = useState(false)
+
+  useEffect(()=>{console.log(id, checked, liked)}, [checked, liked])
+
   const handleClickLike = (e) => {
     try {
-      console.log(e)
+      setLiked(!liked)
     } catch (error) {
       console.error();
     }
@@ -13,7 +19,7 @@ function Card({title, price, imageUrl, id}) {
 
   const handleClickAdd = (e) => {
     try {
-      console.log(e.target)
+      setChecked(!checked)
     } catch (error) {
       console.error();
     }
@@ -21,19 +27,27 @@ function Card({title, price, imageUrl, id}) {
 
     return (
         <div className={styles.card}>
-            <button className={styles.like_button} onClick={handleClickLike}>
-                <img src="/images/heart-icon.svg" alt="heart icon" width={32} height={32}></img>
-            </button>
-            <img src={imageUrl} alt="picture" width={133} height={112}></img>              
+            <img className={styles.like_button} 
+                  onClick={handleClickLike} 
+                  src={liked ? "/images/heart-icon_liked.svg" : "/images/heart-icon.svg"}
+                  alt="heart icon"
+            />
+            <img src={imageUrl} 
+                  alt="sneakers picture" 
+                  width={133} 
+                  height={112}
+            />             
             <h5>{title}</h5>
             <div className="d-flex justify-between align-center">
               <div className="d-flex flex-column">
                 <span>Цена:</span>
                 <b>{price} руб.</b>
               </div>            
-              <button className={styles.add_button} onClick={handleClickAdd}>
-                <img src="/images/button_plus.svg" alt="add-button picture"></img>
-              </button>
+              <img className={styles.add_button} 
+                    onClick={handleClickAdd} 
+                    src={checked ? "/images/button_checked.svg" : "/images/button_plus.svg"} 
+                    alt="addButton picture"
+              />              
             </div>
         </div>
     )

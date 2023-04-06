@@ -1,14 +1,18 @@
 // import 'macro-css';
+import { useState } from "react";
 import Card from "./components/Card";
 import Drawer from "./components/Drawer";
 import Header from "./components/Header";
 import { cardList } from "./utils/constants";
 
 function App() {
+  const [showDrawer, setShowDrawer] = useState(false)
+  
   return (
     <main className="wrapper clear">
-      <Drawer />     
-      <Header />
+      {showDrawer && <Drawer setShowDrawer={setShowDrawer}/>}
+      {/* <Drawer />      */}
+      <Header setShowDrawer={setShowDrawer}/>
  
       <section className="content p-40">
         <div className="d-flex align-center justify-between flex-wrap mb-40">
@@ -20,7 +24,16 @@ function App() {
         </div>        
 
         <div className="d-flex flex-wrap">
-          {cardList.map((item, index) => (<Card title={item.title} price={item.price} imageUrl={item.imageUrl} id={index} key={index}/>))}
+          {cardList.map((item, index) => (
+            <Card 
+              title={item.title} 
+              price={item.price} 
+              imageUrl={item.imageUrl} 
+              id={index} 
+              key={index}
+            />
+            ))
+          }
         </div>       
 
       </section>

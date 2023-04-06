@@ -1,12 +1,17 @@
 import styles from './Drawer.module.scss'
 import cn from 'classnames';
 
-function Drawer() {
+function Drawer({setShowDrawer}) {
+    
     return (
-        <div style={{display: 'none'}} className={styles.overlay}>
+        <div className={styles.overlay}>
             <div className={styles.drawer}>
                 <h2 className='m-20'>Корзина
-                    <img src='/images/button_remove.svg' alt='remove button' className={styles.removeButton}></img>
+                    <img    src='/images/button_remove.svg' 
+                            alt='remove button' 
+                            className={styles.removeButton} 
+                            onClick={()=>{setShowDrawer(false)}}
+                    />
                 </h2>
                 <div className={cn(styles.items, 'd-flex', 'flex-column', 'flex', 'pr-10')}>
 
@@ -33,7 +38,7 @@ function Drawer() {
                             <b>1 074 руб.</b>
                         </li>
                     </ul>
-                    <button className={styles.greenButton}>Оформить заказ
+                    <button className={styles.greenButton} onClick={()=>{setShowDrawer(false)}}>Оформить заказ
                         <img src='/images/arrow.svg' alt='arrow'></img>
                     </button>
                 </div>
