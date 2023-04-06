@@ -1,7 +1,7 @@
 import styles from './Drawer.module.scss'
 import cn from 'classnames';
 
-function Drawer({setShowDrawer, chosedItems, setChosedItems}) {
+function Drawer({setShowDrawer, chosedItems, setChosedItems, totalPrice}) {
     
     return (
         <div className={styles.overlay}>
@@ -39,12 +39,12 @@ function Drawer({setShowDrawer, chosedItems, setChosedItems}) {
                         <li>
                             <span>Итого:</span>
                             <div></div>
-                            <b>21 498 руб.</b>
+                            <b>{totalPrice} руб.</b>
                         </li>
                         <li>
                             <span>Налог 5%:</span>
                             <div></div>
-                            <b>1 074 руб.</b>
+                            <b>{totalPrice*0.05} руб.</b>
                         </li>
                     </ul>
                     <button className={styles.greenButton} onClick={()=>{setShowDrawer(false)}}>Оформить заказ

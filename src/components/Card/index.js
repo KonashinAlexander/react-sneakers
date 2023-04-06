@@ -9,7 +9,7 @@ function Card({title, price, imageUrl, id, setChosedItems}) {
 
   // useEffect(()=>{console.log(id, checked, liked)}, [checked, liked])
 
-  const handleClickLike = (e) => {
+  const handleClickLike = () => {
     try {
       setLiked(!liked)
       console.log('like >>>', id)
@@ -18,10 +18,14 @@ function Card({title, price, imageUrl, id, setChosedItems}) {
     }
   }
 
-  const handleClickAdd = (e) => {
+  const handleClickAdd = () => {
     try {
-      setChecked(!checked)
-      setChosedItems(prev=> [...prev, {imageUrl, title, price}])      
+      if (!checked) {
+        setChecked(!checked)
+        setChosedItems(prev=> [...prev, {imageUrl, title, price}])        
+      } else {
+        setChecked(!checked)
+      }   
     } catch (error) {
       console.log(error);
     }

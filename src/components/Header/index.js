@@ -1,4 +1,4 @@
-function Header({setShowDrawer}) {  
+function Header({setShowDrawer, totalPrice}) {  
     return (
         <header className='d-flex justify-between align-center p-40 flex-wrap'>
         <div className="d-flex align-center">
@@ -11,7 +11,7 @@ function Header({setShowDrawer}) {
         <ul className="d-flex cu-p" onClick={()=>{setShowDrawer(true)}}>
           <li className="mr-30">
             <img src='/images/basket.svg' alt='basket picture' width={18} height={18} />
-            <span>1205 руб.</span>
+            <span>{totalPrice} руб.</span>
           </li>
           <li>
             <img src='/images/profile_icon.svg' alt='profile picture' width={18} height={18} />
