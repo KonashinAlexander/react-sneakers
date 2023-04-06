@@ -1,7 +1,7 @@
 import styles from './Drawer.module.scss'
 import cn from 'classnames';
 
-function Drawer({setShowDrawer, chosedItems}) {
+function Drawer({setShowDrawer, chosedItems, setChosedItems}) {
     
     return (
         <div className={styles.overlay}>
@@ -15,14 +15,21 @@ function Drawer({setShowDrawer, chosedItems}) {
                 </h2>
 
                 <div className={cn(styles.items, 'd-flex', 'flex-column', 'flex', 'pr-10')}>
-                    {chosedItems.map(item=>(
-                        <div className={cn(styles.cartItem, 'd-flex', 'align-center', 'mb-15')}>
+                    {chosedItems.map((item, index)=>(
+                        <div className={cn(styles.cartItem, 'd-flex', 'align-center', 'mb-15')} key={index}>
                         <div className={styles.cartItemImage} style={{backgroundImage: `url(${item.imageUrl})`}}></div>
                         <div className='mr-20 d-flex flex-wrap'>
                             <p className='mb-5'>{item.title}</p>
                             <b>{item.price} руб.</b>
                         </div>
-                            <img src='/images/button_remove.svg' alt='remove button' className={cn(styles.removeButton, 'mr-10')}></img>
+                            <img 
+                                src='/images/button_remove.svg' 
+                                alt='remove button' 
+                                className={cn(styles.removeButton, 'mr-10')}
+                                onClick={()=>{
+                                    setChosedItems(chosedItems.filter(a => a.title !== item.title))
+                                }}
+                            />
                         </div>
                     ))}
                 </div>    

@@ -22,7 +22,7 @@ function App() {
   
   return (
     <main className="wrapper clear">
-      {showDrawer && <Drawer setShowDrawer={setShowDrawer} chosedItems={chosedItems}/>}
+      {showDrawer && <Drawer setShowDrawer={setShowDrawer} chosedItems={chosedItems} setChosedItems={setChosedItems}/>}
       <Header setShowDrawer={setShowDrawer}/>
  
       <section className="content p-40">

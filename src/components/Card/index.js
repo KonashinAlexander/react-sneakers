@@ -21,8 +21,7 @@ function Card({title, price, imageUrl, id, setChosedItems}) {
   const handleClickAdd = (e) => {
     try {
       setChecked(!checked)
-      setChosedItems(prev=> [...prev, {imageUrl, title, price}])
-      console.log({imageUrl, title, price})
+      setChosedItems(prev=> [...prev, {imageUrl, title, price}])      
     } catch (error) {
       console.log(error);
     }
