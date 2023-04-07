@@ -1,8 +1,9 @@
 import styles from './Drawer.module.scss'
 import cn from 'classnames';
 
-function Drawer({setShowDrawer, chosedItems, setChosedItems, totalPrice}) {
-    
+
+function Drawer({setShowDrawer, chosedItems, setChosedItems, totalPrice, amount}) {
+       
     return (
         <div className={styles.overlay}>
             <div className={styles.drawer}>
@@ -10,26 +11,28 @@ function Drawer({setShowDrawer, chosedItems, setChosedItems, totalPrice}) {
                     <img    src='/images/button_remove.svg' 
                             alt='remove button' 
                             className={styles.removeButton} 
-                            onClick={()=>{setShowDrawer(false)}}
+                            onClick={()=>{
+                                setShowDrawer(false);
+                            }}
                     />
                 </h2>
 
                 <div className={cn(styles.items, 'd-flex', 'flex-column', 'flex', 'pr-10')}>
                     {chosedItems.map((item, index)=>(
-                        <div className={cn(styles.cartItem, 'd-flex', 'align-center', 'mb-15')} key={index}>
-                        <div className={styles.cartItemImage} style={{backgroundImage: `url(${item.imageUrl})`}}></div>
-                        <div className='mr-20 d-flex flex-wrap'>
-                            <p className='mb-5'>{item.title}</p>
-                            <b>{item.price} руб.</b>
-                        </div>
-                            <img 
-                                src='/images/button_remove.svg' 
-                                alt='remove button' 
-                                className={cn(styles.removeButton, 'mr-10')}
-                                onClick={()=>{
-                                    setChosedItems(chosedItems.filter(a => a.title !== item.title))
-                                }}
-                            />
+                        <div className={cn(styles.cartItem, 'd-flex', 'align-center', 'mb-15')} key={index} id={index}>
+                            <div className={styles.cartItemImage} style={{backgroundImage: `url(${item.imageUrl})`}}></div>
+                            <div className='mr-20 d-flex flex-wrap'>
+                                <p className='mb-5'>{item.title}</p>
+                                <b>{item.price} руб.</b>
+                            </div>
+                                <img 
+                                    src='/images/button_remove.svg' 
+                                    alt='remove button' 
+                                    className={cn(styles.removeButton, 'mr-10')}
+                                    onClick={()=>{
+                                        setChosedItems(chosedItems.filter(a => a.id !== item.id))
+                                    }}
+                                />
                         </div>
                     ))}
                 </div>    
@@ -37,14 +40,19 @@ function Drawer({setShowDrawer, chosedItems, setChosedItems, totalPrice}) {
                 <div className={styles.cartTotalBlock}>
                     <ul>
                         <li>
+                            <span>Количество:</span>
+                            <div></div>
+                            <b>{amount} шт.</b>
+                        </li>
+                        <li>
                             <span>Итого:</span>
                             <div></div>
-                            <b>{totalPrice} руб.</b>
+                            <b>{totalPrice.toFixed(2)} руб.</b>
                         </li>
                         <li>
                             <span>Налог 5%:</span>
                             <div></div>
-                            <b>{totalPrice*0.05} руб.</b>
+                            <b>{(totalPrice*0.05).toFixed(2)} руб.</b>
                         </li>
                     </ul>
                     <button className={styles.greenButton} onClick={()=>{setShowDrawer(false)}}>Оформить заказ

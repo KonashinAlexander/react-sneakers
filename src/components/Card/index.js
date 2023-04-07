@@ -22,7 +22,7 @@ function Card({title, price, imageUrl, id, setChosedItems}) {
     try {
       if (!checked) {
         setChecked(!checked)
-        setChosedItems(prev=> [...prev, {imageUrl, title, price}])        
+        setChosedItems(prev=> [...prev, {imageUrl, title, price, id}])        
       } else {
         setChecked(!checked)
       }   
