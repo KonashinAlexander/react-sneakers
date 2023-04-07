@@ -1,8 +1,24 @@
 import styles from './Drawer.module.scss'
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import { API_URL } from '../api';
 
 
-function Drawer({setShowDrawer, chosedItems, setChosedItems, totalPrice, amount}) {
+function Drawer({setShowDrawer, chosedItems, setChosedItems, totalPrice, amount,  refreshFunc}) {
+
+    const removeCardFromServer = (id) => {        
+        fetch(`${API_URL}/chosedItems/${id}`, {
+            method: 'DELETE',
+        })
+        .then(res => {
+            if (res.ok) {return res.json()}
+            console.log('error on server side')
+        })
+        .then(task => {
+            refreshFunc()
+        })
+        .catch(error => {console.log(error)})
+    }
        
     return (
         <div className={styles.overlay}>
@@ -20,6 +36,7 @@ function Drawer({setShowDrawer, chosedItems, setChosedItems, totalPrice, amount}
                 <div className={cn(styles.items, 'd-flex', 'flex-column', 'flex', 'pr-10')}>
                     {chosedItems.map((item, index)=>(
                         <div className={cn(styles.cartItem, 'd-flex', 'align-center', 'mb-15')} key={index} id={index}>
+                            <p className='ml-5'>{item.id}</p>
                             <div className={styles.cartItemImage} style={{backgroundImage: `url(${item.imageUrl})`}}></div>
                             <div className='mr-20 d-flex flex-wrap'>
                                 <p className='mb-5'>{item.title}</p>
@@ -29,9 +46,7 @@ function Drawer({setShowDrawer, chosedItems, setChosedItems, totalPrice, amount}
                                     src='/images/button_remove.svg' 
                                     alt='remove button' 
                                     className={cn(styles.removeButton, 'mr-10')}
-                                    onClick={()=>{
-                                        setChosedItems(chosedItems.filter(a => a.id !== item.id))
-                                    }}
+                                    onClick={()=>{removeCardFromServer(item.id)}}
                                 />
                         </div>
                     ))}
@@ -63,5 +78,14 @@ function Drawer({setShowDrawer, chosedItems, setChosedItems, totalPrice, amount}
         </div>
     )
 };
+
+
+Drawer.propTypes = {
+    setShowDrawer: PropTypes.func, 
+    chosedItems: PropTypes.array, 
+    setChosedItems: PropTypes.func, 
+    totalPrice: PropTypes.number, 
+    amount: PropTypes.number
+}
 
 export default Drawer;

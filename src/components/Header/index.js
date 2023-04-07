@@ -1,3 +1,6 @@
+import PropTypes from 'prop-types';
+
+
 function Header({setShowDrawer, totalPrice}) {  
     return (
         <header className='d-flex justify-between align-center p-40 flex-wrap'>
@@ -20,5 +23,11 @@ function Header({setShowDrawer, totalPrice}) {
       </header>
     )
 }
+
+Header.propTypes = {
+  setShowDrawer: PropTypes.func, 
+  totalPrice: PropTypes.number, 
+}
+
 
 export default Header;

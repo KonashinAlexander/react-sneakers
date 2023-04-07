@@ -1,28 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import styles from './Card.module.scss'
+import styles from './Card.module.scss';
+import { API_URL } from '../api'
 
-function Card({title, price, imageUrl, id, setChosedItems}) {
+
+function Card({title, price, imageUrl, id, setChosedItems, refreshFunc}) {
 
   const [checked, setChecked] = useState(false)
   const [liked, setLiked] = useState(false)
 
-  // useEffect(()=>{console.log(id, checked, liked)}, [checked, liked])
+  const addCardToServer = () => {
+    fetch(`${API_URL}/chosedItems`, {
+    method: 'POST',
+    headers: {'content-type':'application/json'},
+    body: JSON.stringify({
+      imageUrl: `${imageUrl}`, 
+      title: `${title}`, 
+      price: `${price}`, 
+      id: `${id}`})
+  })
+  .then(res => {if (res.ok) {return res.json()}})
+  .then(item => {refreshFunc()})
+  .catch(error => {console.log(error)})
+  }
 
   const handleClickLike = () => {
     try {
       setLiked(!liked)
-      console.log('like >>>', id)
     } catch (error) {
       console.log(error);
     }
   }
 
-  const handleClickAdd = () => {
+  const handleClickAdd = (imageUrl, title, price, id) => {
     try {
       if (!checked) {
         setChecked(!checked)
-        setChosedItems(prev=> [...prev, {imageUrl, title, price, id}])        
+        addCardToServer(imageUrl, title, price, id)
       } else {
         setChecked(!checked)
       }   
@@ -63,7 +77,8 @@ Card.propTypes = {
   title: PropTypes.string,
   price: PropTypes.number,
   imageUrl: PropTypes.string,
-  id: PropTypes.number
+  id: PropTypes.number,
+  setChosedItems: PropTypes.func
 }
 
 export default Card;

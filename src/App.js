@@ -4,27 +4,39 @@ import Card from "./components/Card";
 import Drawer from "./components/Drawer";
 import Header from "./components/Header";
 import cn from 'classnames';
+import { API_URL, GET_CONFIG } from "./components/api";
+
+
 
 function App() {
+
   const [showDrawer, setShowDrawer] = useState(false)
   const [items, setItems] = useState([])
   const [chosedItems, setChosedItems] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
   const [searchValue, setSearchValue] = useState('')
 
-  useEffect(()=>{
-    fetch('https://642e5d0b8ca0fe3352cde4c6.mockapi.io/items', 
-    {
-    method: 'GET',
-    headers: {'content-type':'application/json'},
-    })
-    .then(res => {if (res.ok) {return res.json()}})
+  const getItemsFromServer = () => {
+    fetch(`${API_URL}/items`, GET_CONFIG)
+    .then(res => {if (res.ok) {return res.json()}})   
     .then(data => setItems(data))
-    .catch(error => {console.log(error)})
-  },[])
+    .catch(error => {console.log(error)}) 
+  }
+
+   const getChosedItemsFromServer = () => {
+    fetch(`${API_URL}/chosedItems`, GET_CONFIG)
+    .then(res => {if (res.ok) {return res.json()}})  
+    .then(data => setChosedItems(data)) 
+    .catch(error => {console.log(error)}) 
+  }
 
   useEffect(()=>{
-    const total = chosedItems.map(item=>item.price).reduce((sum, current)=>{return sum + current},0)
+    getItemsFromServer()
+    getChosedItemsFromServer()    
+  },[])
+
+  useEffect(()=>{    
+    const total = chosedItems.map(item=>parseInt(item.price)).reduce((sum, current)=>{return sum + current},0)
     const amount = chosedItems.length
     setTotalPrice(total)
   }, [chosedItems])
@@ -42,6 +54,7 @@ function App() {
                               setChosedItems={setChosedItems} 
                               totalPrice={totalPrice}
                               amount={amount}
+                              refreshFunc={getChosedItemsFromServer}
                       />
       }
       <Header setShowDrawer={setShowDrawer} totalPrice={totalPrice}/>
@@ -68,9 +81,9 @@ function App() {
                   title={item.title} 
                   price={item.price} 
                   imageUrl={item.imageUrl}
-                  id={Math.random()*1000000} 
-                  key={index*item.price}
+                  key={index+item.price}
                   setChosedItems={setChosedItems}
+                  refreshFunc={getChosedItemsFromServer}
                 />
                 ))
           }
