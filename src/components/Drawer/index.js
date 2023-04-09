@@ -32,48 +32,67 @@ function Drawer({setShowDrawer, chosedItems, setChosedItems, totalPrice, amount,
                             }}
                     />
                 </h2>
-
-                <div className={cn(styles.items, 'd-flex', 'flex-column', 'flex', 'pr-10')}>
-                    {chosedItems.map((item, index)=>(
-                        <div className={cn(styles.cartItem, 'd-flex', 'align-center', 'mb-15')} key={index} id={index}>
-                            <p className='ml-5'>{item.id}</p>
-                            <div className={styles.cartItemImage} style={{backgroundImage: `url(${item.imageUrl})`}}></div>
-                            <div className='mr-20 d-flex flex-wrap'>
-                                <p className='mb-5'>{item.title}</p>
-                                <b>{item.price} руб.</b>
+                
+                {
+                    chosedItems.length > 0
+                    ? <>
+                    
+                    <div className={cn(styles.items, 'd-flex', 'flex-column', 'flex', 'pr-10')}>
+                        {chosedItems.map((item, index)=>(
+                            <div className={cn(styles.cartItem, 'd-flex', 'align-center', 'mb-15')} key={index} id={index}>
+                                <p className='ml-5'>{item.id}</p>
+                                <div className={styles.cartItemImage} style={{backgroundImage: `url(${item.imageUrl})`}}></div>
+                                <div className='mr-20 d-flex flex-wrap'>
+                                    <p className='mb-5'>{item.title}</p>
+                                    <b>{item.price} руб.</b>
+                                </div>
+                                    <img 
+                                        src='/images/button_remove.svg' 
+                                        alt='remove button' 
+                                        className={cn(styles.removeButton, 'mr-10')}
+                                        onClick={()=>{removeCardFromServer(item.id)}}
+                                    />
                             </div>
-                                <img 
-                                    src='/images/button_remove.svg' 
-                                    alt='remove button' 
-                                    className={cn(styles.removeButton, 'mr-10')}
-                                    onClick={()=>{removeCardFromServer(item.id)}}
-                                />
+                        ))}
                         </div>
-                    ))}
-                </div>    
 
-                <div className={styles.cartTotalBlock}>
-                    <ul>
-                        <li>
-                            <span>Количество:</span>
-                            <div></div>
-                            <b>{amount} шт.</b>
-                        </li>
-                        <li>
-                            <span>Итого:</span>
-                            <div></div>
-                            <b>{totalPrice.toFixed(2)} руб.</b>
-                        </li>
-                        <li>
-                            <span>Налог 5%:</span>
-                            <div></div>
-                            <b>{(totalPrice*0.05).toFixed(2)} руб.</b>
-                        </li>
-                    </ul>
-                    <button className={styles.greenButton} onClick={()=>{setShowDrawer(false)}}>Оформить заказ
-                        <img src='/images/arrow.svg' alt='arrow'></img>
-                    </button>
-                </div>
+                        <div className={styles.cartTotalBlock}>
+                            <ul>
+                                <li>
+                                    <span>Количество:</span>
+                                    <div></div>
+                                    <b>{amount} шт.</b>
+                                </li>
+                                <li>
+                                    <span>Итого:</span>
+                                    <div></div>
+                                    <b>{totalPrice.toFixed(2)} руб.</b>
+                                </li>
+                                <li>
+                                    <span>Налог 5%:</span>
+                                    <div></div>
+                                    <b>{(totalPrice*0.05).toFixed(2)} руб.</b>
+                                </li>
+                            </ul>
+                            <button className={styles.greenButton} onClick={()=>{setShowDrawer(false)}}>Оформить заказ
+                                <img src='/images/arrow.svg' alt='arrow'></img>
+                            </button>
+                        </div>
+                    </>              
+                    : 
+                    <>  
+                        <div className={cn(styles.cartTotalBlock, 'd-flex', 'flex-column', 'justify-center', 'align-center')}>
+                            <img src='/images/empty-box.svg' alt='empty box pictire' />
+                            <b>Корзина пуста</b>
+                            <button className={cn(styles.greenButton, '')} onClick={()=>{setShowDrawer(false)}}>
+                                <img src='/images/arrow_back.svg' alt='arrow back picture'></img>  
+                                Вернуться назад                          
+                            </button>
+                        </div>                        
+                    </>                    
+                    
+                }               
+
             </div>
         </div>
     )
