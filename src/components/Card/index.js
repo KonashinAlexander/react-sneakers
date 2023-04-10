@@ -4,11 +4,11 @@ import styles from './Card.module.scss';
 import { API_URL } from '../api'
 
 
-function Card({title, price, imageUrl, id, setChosedItems, setFavoriteItems, refreshFunc}) {
+function Card({title, price, imageUrl, id, setChosedItems, setFavoriteItems, refreshFunc, favorited}) {
 
   const [checked, setChecked] = useState(false)
-  const [liked, setLiked] = useState(false)
-
+  const [liked, setLiked] = useState(favorited)
+  
   const addCardToServer = () => {
     fetch(`${API_URL}/chosedItems`, {
     method: 'POST',
@@ -24,10 +24,16 @@ function Card({title, price, imageUrl, id, setChosedItems, setFavoriteItems, ref
   .catch(error => {console.log(error)})
   }
 
+
   const handleClickLike = () => {
     try {
-      setLiked(!liked);
-      setFavoriteItems(prev => [...prev, {imageUrl, title, price, id}]);
+      if(!liked) {
+        setLiked(!liked);
+        setFavoriteItems(prev => [...prev, {imageUrl, title, price, id}]);
+      } else {
+        setLiked(!liked);
+        setFavoriteItems(prev => prev.filter(item => {return item.id !== id}));        
+      }      
     } catch (error) {
       console.log(error);
     }
