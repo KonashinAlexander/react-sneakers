@@ -1,6 +1,6 @@
 import cn from 'classnames'
 
-export function Home({searchValue, Card, setChosedItems, setFavoriteItems, getChosedItemsFromServer, handleInputChange, setSearchValue, items}) {
+export function Home({searchValue, Card, setChosedItems, setFavoriteItems, getChosedItemsFromServer, handleInputChange, setSearchValue, items, chosedItems }) {
     return (
 
         <section className="content p-40">
@@ -25,6 +25,7 @@ export function Home({searchValue, Card, setChosedItems, setFavoriteItems, getCh
                     key={index+item.price}
                     id={index}
                     setChosedItems={setChosedItems}
+                    chosedItems={chosedItems} 
                     setFavoriteItems={setFavoriteItems}
                     refreshFunc={getChosedItemsFromServer}
                     {...item}

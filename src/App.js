@@ -8,30 +8,27 @@ import { API_URL, GET_CONFIG } from "./components/api";
 import { Home } from "./components/pages/Home";
 import Favorites from "./components/pages/Favorites";
 
-
-
 function App() {
 
   const [showDrawer, setShowDrawer] = useState(false);
   const [items, setItems] = useState([]);
   const [chosedItems, setChosedItems] = useState([]);
   const [favoriteItems, setFavoriteItems] = useState([]);
-
   const [totalPrice, setTotalPrice] = useState(0);
   const [searchValue, setSearchValue] = useState('');
 
   const getItemsFromServer = () => {
-    fetch(`${API_URL}/items`, GET_CONFIG)
-    .then(res => {if (res.ok) {return res.json()}})   
-    .then(data => setItems(data))
-    .catch(error => {console.log(error)}) 
+  fetch(`${API_URL}/items`, GET_CONFIG)
+  .then(res => {if (res.ok) {return res.json()}})   
+  .then(data => setItems(data))
+  .catch(error => {console.log(error)}) 
   };
 
-   const getChosedItemsFromServer = () => {
-    fetch(`${API_URL}/chosedItems`, GET_CONFIG)
-    .then(res => {if (res.ok) {return res.json()}})  
-    .then(data => setChosedItems(data)) 
-    .catch(error => {console.log(error)}) 
+  const getChosedItemsFromServer = () => {
+  fetch(`${API_URL}/chosedItems`, GET_CONFIG)
+  .then(res => {if (res.ok) {return res.json()}})  
+  .then(data => setChosedItems(data)) 
+  .catch(error => {console.log(error)}) 
   };
 
   useEffect(()=>{
@@ -70,7 +67,8 @@ function App() {
                                         setFavoriteItems={setFavoriteItems}
                                         getChosedItemsFromServer={getChosedItemsFromServer}
                                         handleInputChange={handleInputChange} 
-                                        setSearchValue={setSearchValue} 
+                                        setSearchValue={setSearchValue}
+                                        chosedItems={chosedItems} 
                                         items={items}  />}/>
                                         
         <Route path='/favorites' element={<Favorites favoriteItems={favoriteItems} 

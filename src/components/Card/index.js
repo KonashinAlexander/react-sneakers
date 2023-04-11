@@ -4,7 +4,7 @@ import styles from './Card.module.scss';
 import { API_URL } from '../api'
 
 
-function Card({title, price, imageUrl, id, setChosedItems, setFavoriteItems, refreshFunc, favorited}) {
+function Card({title, price, imageUrl, id, setChosedItems, setFavoriteItems, refreshFunc, favorited, chosedItems}) {
 
   const [checked, setChecked] = useState(false)
   const [liked, setLiked] = useState(favorited)
@@ -23,7 +23,6 @@ function Card({title, price, imageUrl, id, setChosedItems, setFavoriteItems, ref
   .then(item => {refreshFunc()})
   .catch(error => {console.log(error)})
   }
-
 
   const handleClickLike = () => {
     try {
